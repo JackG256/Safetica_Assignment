@@ -1,29 +1,42 @@
+using Safetica_Assignment.PageObjects;
+
 namespace Safetica_Assignment;
 
 [TestFixture]
-    public class ChromeTests : CommonTest
-    {
-        [Test]
-        public void ChromeTest()
-        {
-                Assert.Pass();
-        }
+public class TeamsChromeTests : CommonTest
+{
+ 	private IWebDriver _driver;
+	private TeamsPage _teamsPage;
 
-        [Test]
-        public void ChromeTest2()
-        {
-                Assert.Pass();
-        }
+	[SetUp]
+	public void ChromeSetup()
+	{
+		// Get Chromedriver.exe, initialize the driver and pass it to test page
+        var basePath = System.AppDomain.CurrentDomain.BaseDirectory;
+        var driverPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(basePath, "..", "..", "..", "drivers"));
 
-        [Test]
-        public void ChromeTest3()
-        {
-                Assert.Pass();
-        }
+		_driver = new ChromeDriver(driverPath);
 
-        [Test]
-        public void ChromeTest4()
-        {
-                Assert.Pass();
-        }
-    }
+		_teamsPage = new TeamsPage(_driver, _actionLogger);
+	}
+
+	[Test]
+	public void SendOneDriveFile()
+	{
+			_teamsPage.LoadTeamsPage();
+			_teamsPage.LogInTeams();
+			_teamsPage.FilterPopUps();
+	}
+
+	//[Test]
+	//public void LoadPageAndLogIn()
+	//{
+	//		Assert.Pass();
+	//}
+
+	[TearDown]
+	public void ChromeTearDown()
+	{
+		_driver.Quit();
+	}
+}
