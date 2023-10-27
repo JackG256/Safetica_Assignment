@@ -17,7 +17,6 @@ public class Logger
         }
 
         _logFilePath = Path.Combine(fullLogDirectory, logFileName);
-        Console.WriteLine("Jsi kokot");
     }
 
     // Logging function
