@@ -26,6 +26,11 @@ public class TeamsChromeTests : CommonTest
 			_teamsPage.LoadTeamsPage();
 			_teamsPage.LogInTeams();
 			_teamsPage.FilterPopUps();
+			_teamsPage.MoveToChat();
+			//_teamsPage.OpenOneDriveWindow();
+
+
+			//_teamsPage.HardWait();
 	}
 
 	//[Test]
