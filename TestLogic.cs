@@ -3,62 +3,62 @@ namespace Safetica_Assignment.PageObjects;
 
 public class TeamsPage
 {
-    private readonly IWebDriver _driver;
-    private readonly Logger _actionLogger;
+    private readonly IWebDriver driver;
+    private readonly Logger actionLogger;
 
     // Page constructor, passed driver and actionlogger classes to work with
     public TeamsPage(IWebDriver driver, Logger actionLogger)
     {
-        _driver = driver;
-        _actionLogger = actionLogger;
+        this.driver = driver;
+        this.actionLogger = actionLogger;
     }
 
     
     public void LoadTeamsPage()
     {
         // Navigate to specified URL and check element
-        _driver.Navigate().GoToUrl(Constants.teamsUrl);
-        _actionLogger.Log($"Loaded website: [{Constants.teamsUrl}]");
+        driver.Navigate().GoToUrl(Constants.teamsUrl);
+        actionLogger.Log($"Loaded website: [{Constants.teamsUrl}]");
 
-        IWebElement? loginEmailField = AssistFunc.WaitForElement(_driver, By.TagName("input"), 5);
+        IWebElement? loginEmailField = AssistFunc.WaitForElement(driver, By.TagName("input"), 5);
         Assert.IsNotNull(loginEmailField);
     }
 
     public void LogInTeams()
     {
         // Search for email input field, then input email
-        IWebElement? loginEmailField = AssistFunc.WaitForElement(_driver, By.Id("i0116"), 5);
+        IWebElement? loginEmailField = AssistFunc.WaitForElement(driver, By.Id("i0116"), 5);
         Assert.IsNotNull(loginEmailField); 
-        _actionLogger.Log("Email input element found");
+        actionLogger.Log("Email input element found");
 
         loginEmailField.Click();
-        _actionLogger.Log("Email input element clicked");
+        actionLogger.Log("Email input element clicked");
         loginEmailField.SendKeys($"{Constants.login}");
-        _actionLogger.Log($"Input: \"{Constants.login}\"");
+        actionLogger.Log($"Input: \"{Constants.login}\"");
 
         // Submit input
-        IWebElement submitButton = _driver.FindElement(By.CssSelector("input[type='submit']"));
+        IWebElement submitButton = driver.FindElement(By.CssSelector("input[type='submit']"));
         submitButton.Click();
-        _actionLogger.Log($"\"submit\" button pressed");
+        actionLogger.Log($"\"submit\" button pressed");
 
         // Explicit wait to avoid stale elements because of animations
         Thread.Sleep(2000);
 
         // Check the page updated by looking for password input field
-        IWebElement? loginPassField = AssistFunc.WaitForElement(_driver, By.Id("i0118"), 5);
+        IWebElement? loginPassField = AssistFunc.WaitForElement(driver, By.Id("i0118"), 5);
         Assert.IsNotNull(loginPassField);
-        _actionLogger.Log("password input element found");
+        actionLogger.Log("password input element found");
 
         // Input password
         loginPassField.Click();
-        _actionLogger.Log("Password input element clicked");
+        actionLogger.Log("Password input element clicked");
         loginPassField.SendKeys($"{Constants.pass}");
-        _actionLogger.Log($"Input: \"{Constants.pass}\"");
+        actionLogger.Log($"Input: \"{Constants.pass}\"");
 
         // Submit password
-        submitButton = _driver.FindElement(By.Id("idSIButton9"));
+        submitButton = driver.FindElement(By.Id("idSIButton9"));
         submitButton.Click();
-        _actionLogger.Log($"\"submit\" button pressed");
+        actionLogger.Log($"\"submit\" button pressed");
     }
 
     public void FilterPopUps()
@@ -67,67 +67,150 @@ public class TeamsPage
         Thread.Sleep(1000);
 
         // Look for the "Stay Signed In" pop up and filter out if it appears
-        IWebElement? staySignedPopup = AssistFunc.WaitForElement(_driver, By.XPath("//*[@id=\"lightbox\"]/div[3]/div/div[2]/div/div[1]"), 5);
+        IWebElement? staySignedPopup = AssistFunc.WaitForElement(driver, By.XPath("//*[@id=\"lightbox\"]/div[3]/div/div[2]/div/div[1]"), 5);
 
         if (staySignedPopup != null){
-            IWebElement noButton = _driver.FindElement(By.XPath("//*[@id=\"idBtn_Back\"]"));
+            IWebElement noButton = driver.FindElement(By.XPath("//*[@id=\"idBtn_Back\"]"));
             noButton.Click();
-            _actionLogger.Log("Found a \"Stay Signed In\" pop-up, clearing!");
+            actionLogger.Log("Found a \"Stay Signed In\" pop-up, clearing!");
         }else{
-            _actionLogger.Log("Didn't find a \"Stay Signed In\" pop-up...");
+            actionLogger.Log("Didn't find a \"Stay Signed In\" pop-up...");
         }
 
         // Hard sleep to avoid DOM change during animations
         Thread.Sleep(5000);
         
         // Look for the "get PC App" pop up and filter out if it appears
-        IWebElement? getAppPopup = AssistFunc.WaitForElement(_driver, By.ClassName("download-text"), 5);
+        IWebElement? getAppPopup = AssistFunc.WaitForElement(driver, By.ClassName("download-text"), 5);
         
         if(getAppPopup != null){
-            IWebElement useWebApp = _driver.FindElement(By.ClassName("use-app-lnk"));
+            IWebElement useWebApp = driver.FindElement(By.ClassName("use-app-lnk"));
             useWebApp.Click();
-            _actionLogger.Log("Found a \"Use App\" pop-up, clearing!");
+            actionLogger.Log("Found a \"Use App\" pop-up, clearing!");
         }else{
-             _actionLogger.Log("Didn't find a \"Use App\" pop-up...");
+             actionLogger.Log("Didn't find a \"Use App\" pop-up...");
         }
 
         // Hard sleep to avoid DOM change during animations
         Thread.Sleep(8000);
 
         // Look for the "Turn on Notifications" pop up and filter out if it appears
-        IWebElement? notificationsPopup = AssistFunc.WaitForElement(_driver, By.ClassName("toast-bottom-right"),5);
+        IWebElement? notificationsPopup = AssistFunc.WaitForElement(driver, By.ClassName("toast-bottom-right"),5);
         if (notificationsPopup != null){
-            IWebElement closeOption = _driver.FindElement(By.XPath("//*[@id=\"toast-container\"]/div/div/div[2]/div/button[2]"));
+            IWebElement closeOption = driver.FindElement(By.XPath("//*[@id=\"toast-container\"]/div/div/div[2]/div/button[2]"));
             closeOption.Click();
-            _actionLogger.Log("Found a \"notification\" pop up, clearing!");
+            actionLogger.Log("Found a \"notification\" pop up, clearing!");
         }else{
-            _actionLogger.Log("Didn't find a \"notification\" pop up...");
+            actionLogger.Log("Didn't find a \"notification\" pop up...");
         }
     }
 
     public void MoveToChat()
     {
         // Get Chat Sidebar Button and navigate there
-        IWebElement ChatSideBarButton = _driver.FindElement(By.XPath("//*[@id=\"app-bar-86fcd49b-61a2-4701-b771-54728cd291fb\"]"));
-        _actionLogger.Log("Found Chat Button element");
+        IWebElement ChatSideBarButton = driver.FindElement(By.XPath("//*[@id=\"app-bar-86fcd49b-61a2-4701-b771-54728cd291fb\"]"));
+        actionLogger.Log("Found Chat Button element");
         ChatSideBarButton.Click();
-        _actionLogger.Log("Chat button element clicked");
+        actionLogger.Log("Chat button element clicked");
     }
 
     public void OpenOneDriveWindow()
     {
         // Hard sleep to avoid DOM change during animations/loading
-        Thread.Sleep(20000);
+        //Thread.Sleep(15000);
 
-        // Doesn't work, I am completely lost.
-        //IWebElement inputField = _driver.FindElement(By.XPath($"{Constants.teamsAttachButtonXPath}"));
+        // Doesn't work, web driver is unable to locate key elements (Attach button / chat input field)
+        // Following is possible pseudocode to finish the test 
+        // Functions dependent on this sequence will also be in pseudocode
         
-        _actionLogger.Log("Clicked attachment button");
-        
+        /* 
+        // 
+        IWebElement attachButton = driver.FindElement(By.XPath("AttachButton XPath"));
+        attachbutton.click();
+        actionLogger.Log("Clicked attachment button");
+        IWebElement oneDriveAttach = AssistFunc.WaitForElement(driver, By.ClassName("drive-attach"),5);
+        _ctionLogger.Log("Opened OneDrive dialog");
+        */
+    }
+
+    public void AttachFile()
+    {
+        /*
+        IWebElement? driveFileCheckbox = AssistFunc.WaitForElement(driver, By.ClassName("drive-file-check-icon"),5);
+        Assert.IsNotNull(driveFileCheckbox); 
+        driveFileCheckbox.Click();
+        actionLogger.Log("Selected a file")
+        */
+    }
+
+    public void AttachAnotherFile()
+    {
+        /*
+        IWebElement driveFileCheckboxNext = driver.FindElement(By.ClassName("drive-file-check-icon"))
+        driveFileCheckboxNext.Click();
+        actionLogger.Log("Selected another file")
+        */
+    }
+
+    public void ConfirmAttachment()
+    {
+        /*
+        IWebElement attachConfirm = driver.FindElement(By.ClassName("attach-confirm-button"))
+        attachConfirm.Click();
+        actionLogger.Log("Attached multiple files to a message");
+        */
+    }
+
+    public void SendMessage()
+    {
+        /*
+        IWebElement? sendMessage = AssistFunc.WaitForElement(driver, By.ClassName("icon-message-send"),5);
+        Assert.IsNotNull(sendMessage);
+        sendMessage.Click();
+        actionLogger.Log("Sent message");
+        */
+    }
+
+    public void SendFullMessage()
+    {
+        /*
+        IWebElement? chatBox = AssistFunc.WaitForElement(driver, By.ClassName("text-input-field"),5);
+        Assert.IsNotNull(chatBox);
+        chatBox.Click();
+        actionLogger.Log("Clicked chat input field");
+
+        chatBox.SendKeys("This is a message!");
+        SendMessage();
+        */
+    }
+
+    public void SendSplitMessage()
+    {
+        /*
+        IWebElement? chatBox = AssistFunc.WaitForElement(driver, By.ClassName("text-input-field"),5);
+        Assert.IsNotNull(chatBox);
+        chatBox.Click();
+        actionLogger.Log("Clicked chat input field");
+
+        string[] messages ={"This",
+                            "is", 
+                            "SPARTA!, no wait...",
+                            "a", 
+                            "message." };
+
+        foreach (var message in messages)
+        {
+            chatBox.SendKeys(message);
+            SendMessage();
+            
+            // Failsafe to avoid losing focus
+            chatBox.Click();
+        }
+        */
     }
 
     public void HardWait()
     {
-        Thread.Sleep(150000);
+        Thread.Sleep(15000);
     }
 }
