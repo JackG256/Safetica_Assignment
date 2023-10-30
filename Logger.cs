@@ -8,9 +8,9 @@ public class Logger
 	public Logger(string logDirectory, string logFileName)
 	{	
 		// Navigate to project root folder  
-		var baseDir = AppDomain.CurrentDomain.BaseDirectory; 
-		var projectRoot = Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..")); 
-		var fullLogDirectory = Path.Combine(projectRoot, logDirectory);
+		string baseDir = AppDomain.CurrentDomain.BaseDirectory; 
+		string projectRoot = Path.GetFullPath(Path.Combine(baseDir, "..", "..", "..")); 
+		string fullLogDirectory = Path.Combine(projectRoot, logDirectory);
 
 		// If specified directory doesn't yet exist, create it
 		if (!Directory.Exists(fullLogDirectory))
@@ -26,7 +26,7 @@ public class Logger
 	public void Log(string message)
 	{
 		// Create message from method call and append to file
-		var logMessage = $"[{DateTime.Now:dd-MM-yyyy; hh:mm:ss}] - {message}";
+		string logMessage = $"[{DateTime.Now:dd-MM-yyyy; hh:mm:ss}] - {message}";
 		File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
 	}
 }
