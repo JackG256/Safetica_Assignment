@@ -27,17 +27,22 @@ public class TeamsChromeTests : CommonTest
 			teamsPage.LogInTeams();
 			teamsPage.FilterPopUps();
 			teamsPage.MoveToChat();
-			//_teamsPage.OpenOneDriveWindow();
-
-
-			//_teamsPage.HardWait();
+			
+			teamsPage.OpenOneDriveWindow();
+			teamsPage.AttachFile();
+			teamsPage.SendMessage();
 	}
 
-	//[Test]
-	//public void LoadPageAndLogIn()
-	//{
-	//		Assert.Pass();
-	//}
+	[Test]
+	public void WriteAndSendMessageFull()
+	{
+			teamsPage.LoadTeamsPage();
+			teamsPage.LogInTeams();
+			teamsPage.FilterPopUps();
+			teamsPage.MoveToChat();
+
+			teamsPage.SendFullMessage();
+	}
 
 	[TearDown]
 	public void ChromeTearDown()
