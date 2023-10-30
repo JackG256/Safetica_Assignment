@@ -3,7 +3,7 @@ namespace Safetica_Assignment;
 public class Logger
 {
 	// Initiate path variable  to file
-	private readonly string _logFilePath;
+	private readonly string logFilePath;
 	
 	public Logger(string logDirectory, string logFileName)
 	{	
@@ -19,7 +19,7 @@ public class Logger
 		}
 
 		// Create log file in directory
-		_logFilePath = Path.Combine(fullLogDirectory, logFileName);
+		logFilePath = Path.Combine(fullLogDirectory, logFileName);
 	}
 
 	// Logging function
@@ -27,6 +27,6 @@ public class Logger
 	{
 		// Create message from method call and append to file
 		var logMessage = $"[{DateTime.Now:dd-MM-yyyy; hh:mm:ss}] - {message}";
-		File.AppendAllText(_logFilePath, logMessage + Environment.NewLine);
+		File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
 	}
 }

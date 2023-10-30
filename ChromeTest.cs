@@ -5,8 +5,8 @@ namespace Safetica_Assignment;
 [TestFixture]
 public class TeamsChromeTests : CommonTest
 {
- 	private IWebDriver _driver;
-	private TeamsPage _teamsPage;
+ 	private IWebDriver driver;
+	private TeamsPage teamsPage;
 
 	[SetUp]
 	public void ChromeSetup()
@@ -15,18 +15,18 @@ public class TeamsChromeTests : CommonTest
         var basePath = System.AppDomain.CurrentDomain.BaseDirectory;
         var driverPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(basePath, "..", "..", "..", "drivers"));
 
-		_driver = new ChromeDriver(driverPath);
+		driver = new ChromeDriver(driverPath);
 
-		_teamsPage = new TeamsPage(_driver, _actionLogger);
+		teamsPage = new TeamsPage(driver, actionLogger);
 	}
 
 	[Test]
 	public void SendOneDriveFile()
 	{
-			_teamsPage.LoadTeamsPage();
-			_teamsPage.LogInTeams();
-			_teamsPage.FilterPopUps();
-			_teamsPage.MoveToChat();
+			teamsPage.LoadTeamsPage();
+			teamsPage.LogInTeams();
+			teamsPage.FilterPopUps();
+			teamsPage.MoveToChat();
 			//_teamsPage.OpenOneDriveWindow();
 
 
@@ -42,6 +42,6 @@ public class TeamsChromeTests : CommonTest
 	[TearDown]
 	public void ChromeTearDown()
 	{
-		_driver.Quit();
+		driver.Quit();
 	}
 }
