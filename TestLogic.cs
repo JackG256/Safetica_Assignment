@@ -211,6 +211,7 @@ public class TeamsPage
 
     public void HardWait()
     {
-        Thread.Sleep(15000);
+        actionLogger.Log("Sleeping . . .");
+        Thread.Sleep(10000);
     }
 }

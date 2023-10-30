@@ -33,6 +33,7 @@ public class TeamsChromeTests : CommonTest
 			teamsPage.OpenOneDriveWindow();
 			teamsPage.AttachFile();
 			teamsPage.SendMessage();
+			teamsPage.HardWait();
 			actionLogger.Log("Ran out of things to do... Finishing!\n");
 	}
 
@@ -45,6 +46,7 @@ public class TeamsChromeTests : CommonTest
 			teamsPage.MoveToChat();
 
 			teamsPage.SendFullMessage();
+			teamsPage.HardWait();
 			actionLogger.Log("Ran out of things to do... Finishing!\n");
 	}
 

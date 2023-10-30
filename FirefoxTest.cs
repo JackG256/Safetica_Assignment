@@ -41,6 +41,7 @@ public class TeamsFirefoxTest : CommonTest
 			teamsPage.AttachFile();
             teamsPage.AttachAnotherFile();
 			teamsPage.SendMessage();
+			teamsPage.HardWait();
             actionLogger.Log("Ran out of things to do... Finishing!\n");
 	}
 
@@ -53,6 +54,7 @@ public class TeamsFirefoxTest : CommonTest
 			teamsPage.MoveToChat();
 
 			teamsPage.SendSplitMessage();
+			teamsPage.HardWait();
             actionLogger.Log("Ran out of things to do... Finishing!\n");
 	}
 
