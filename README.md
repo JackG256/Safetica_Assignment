@@ -31,8 +31,9 @@
 ## Where are logs stored?
 
 On the first test run, the logger class creates `test_runs` and `action_logs` folders in the repository root folder (if they don't exist yet).
+
 Logs:
-- Test runs and their outcomes are in the `test_runs` folder.
+- Test runs and their results are in the `test_runs` folder.
 - Detailed logs of actions performed during tests are in the `action_logs` folder.
 
 Each log's name represents the timestamp of its creation.
